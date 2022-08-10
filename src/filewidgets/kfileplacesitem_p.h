@@ -19,6 +19,7 @@
 class KDirLister;
 namespace Solid
 {
+class Block;
 class StorageAccess;
 class StorageVolume;
 class StorageDrive;
@@ -100,11 +101,13 @@ private:
     QPointer<Solid::StorageAccess> m_access;
     QPointer<Solid::StorageVolume> m_volume;
     QPointer<Solid::StorageDrive> m_drive;
+    QPointer<Solid::Block> m_block;
     QPointer<Solid::OpticalDisc> m_disc;
     QPointer<Solid::PortableMediaPlayer> m_player;
     QPointer<Solid::NetworkShare> m_networkShare;
     QString m_deviceIconName;
     QStringList m_emblems;
+    QString m_backingFile;
     QString m_groupName;
     mutable QString m_deviceDisplayName;
 };

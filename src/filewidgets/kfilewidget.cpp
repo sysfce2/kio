@@ -1161,6 +1161,7 @@ void KFileWidgetPrivate::initDirOpWidgets()
 
     m_messageWidget = new KMessageWidget(q);
     m_messageWidget->setMessageType(KMessageWidget::Error);
+    m_messageWidget->setWordWrap(true);
     m_messageWidget->hide();
 
     m_ops = new KDirOperator(QUrl(), m_opsWidget);

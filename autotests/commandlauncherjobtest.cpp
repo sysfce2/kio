@@ -234,11 +234,14 @@ void CommandLauncherJobTest::doesNotFailOnNonExistingExecutable()
 void CommandLauncherJobTest::shouldDoNothingOnEmptyCommand()
 {
     // When running an empty command
-    KIO::CommandLauncherJob *job = new KIO::CommandLauncherJob(QString(), this);
+    KIO::CommandLauncherJob *job = new KIO::CommandLauncherJob(QString{}, this);
 
-    // THEN it should do nothing
-    // at least not crash (old bug 186036)
-    QVERIFY(job->exec());
+    // THEN it should fail
+    // and not crash (old bug 186036)
+    QVERIFY(!job->exec());
+
+    QCOMPARE(job->error(), 100);
+    QCOMPARE(job->errorString(), QStringLiteral("Empty command provided"));
 
     // Wait for KProcessRunner to be deleted
     QTRY_COMPARE(KProcessRunner::instanceCount(), 0);

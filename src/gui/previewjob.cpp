@@ -152,6 +152,12 @@ public:
     QMap<QString, int> deviceIdMap;
     enum CachePolicy { Prevent, Allow, Unknown } currentDeviceCachePolicy = Unknown;
 
+    struct StandardThumbnailerData {
+        QString tryExec;
+        QString exec;
+    };
+    QMap<QString, StandardThumbnailerData> standardThumbnailers;
+
     void getOrCreateThumbnail();
     bool statResultThumbnail();
     void createThumbnail(const QString &);
@@ -187,13 +193,25 @@ PreviewJob::PreviewJob(const KFileItemList &items, const QSize &size, const QStr
 {
     Q_D(PreviewJob);
 
+    const KConfigGroup globalConfig(KSharedConfig::openConfig(), QStringLiteral("PreviewSettings"));
     if (enabledPlugins) {
         d->enabledPlugins = *enabledPlugins;
     } else {
-        const KConfigGroup globalConfig(KSharedConfig::openConfig(), QStringLiteral("PreviewSettings"));
         d->enabledPlugins =
             globalConfig.readEntry("Plugins",
                                    QStringList{QStringLiteral("directorythumbnail"), QStringLiteral("imagethumbnail"), QStringLiteral("jpegthumbnail")});
+    }
+
+    const KConfigGroup thumbnailerConfig(KSharedConfig::openConfig(QStringLiteral("/usr/share/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer")), QStringLiteral("Thumbnailer Entry"));
+    auto mimetypes = thumbnailerConfig.readEntry("MimeType", QString()).split(QStringLiteral(";"));
+    auto tryExec = thumbnailerConfig.readEntry("TryExec", QString());
+    auto exec = thumbnailerConfig.readEntry("Exec", QString());
+    for (auto mimetype : mimetypes)
+    {
+        if (!mimetype.isEmpty())
+        {
+            d->standardThumbnailers.insert(mimetype, KIO::PreviewJobPrivate::StandardThumbnailerData{ tryExec, exec });
+        }
     }
 
     // Return to event loop first, determineNextFile() might delete this;
@@ -284,6 +302,13 @@ void PreviewJobPrivate::startPreview()
 
         const QString mimeType = item.item.mimetype();
         KPluginMetaData plugin;
+
+        // check if we have a thumbnailer for this item in /usr/share/thumbnailers
+        if (standardThumbnailers.contains(mimeType))
+        {
+            //TODO if this is the case, handle it with a standard thumbnailer instead
+            qWarning() << "This mimetype " <<mimeType << " has a standard thumbnailer!";
+        }
 
         // look for protocol-specific thumbnail plugins first
         auto it = protocolMap.constFind(item.item.url().scheme());

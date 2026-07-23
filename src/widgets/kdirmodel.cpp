@@ -620,6 +620,11 @@ void KDirModelPrivate::_k_slotNewItems(const QUrl &directoryUrl, const KFileItem
 void KDirModelPrivate::_k_slotCompleted(const QUrl &directoryUrl)
 {
     KDirModelNode *result = nodeForUrl(directoryUrl); // O(depth)
+    if (!result) {
+        // Directory no longer in the model (openUrl() switched away before this
+        // listing finished). Ignore the stale completion.
+        return;
+    }
     Q_ASSERT(isDir(result));
     KDirModelDirNode *dirNode = static_cast<KDirModelDirNode *>(result);
     m_urlsBeingFetched.remove(dirNode);

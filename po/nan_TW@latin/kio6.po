@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: kio\n"
 "Report-Msgid-Bugs-To: https://bugs.kde.org\n"
 "POT-Creation-Date: 2026-07-22 00:41+0000\n"
-"PO-Revision-Date: 2026-07-19 10:39+0900\n"
+"PO-Revision-Date: 2026-07-23 22:01+0900\n"
 "Last-Translator: Kisaragi Hiu <mail@kisaragi-hiu.com>\n"
 "Language-Team: Min Nan Chinese Latin <zh-l10n@lists.slat.org>\n"
 "Language: nan_TW@latin\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Lokalize 26.07.70\n"
+"X-Generator: Lokalize 26.11.70\n"
 
 #, kde-format
 msgctxt "NAME OF TRANSLATORS"
@@ -2899,7 +2899,7 @@ msgstr "Sóo-ū ê piau-tshiam"
 #: filewidgets/kfileplacesmodel.cpp:258
 msgctxt "KFile System Bookmarks"
 msgid "Home"
-msgstr "Thâu-ia̍h"
+msgstr "Ka-bo̍k-lo̍k"
 
 #: filewidgets/kfileplacesmodel.cpp:267
 msgctxt "KFile System Bookmarks"
@@ -3552,6 +3552,8 @@ msgid ""
 "Creating a file or folder with the name <filename>%1</filename> is not "
 "possible since it would overlap with the location of a user's home folder."
 msgstr ""
+"Bô-huat-tōo kiàn-li̍p hō-tsò <filename>%1</filename> ê tóng-àn á-sī tsu-liāu-"
+"giap-á, in-uī i ē kap tsi̍t-ê iōng-tsiá ê ka-bo̍k-lo̍k ū tshiong-tu̍t."
 
 #: filewidgets/knewfilemenu.cpp:1253
 #, kde-format
